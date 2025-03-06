@@ -4,19 +4,23 @@ const complexityELM = document.getElementById("complexityInfo"); // Ensure this 
 const container = document.getElementById("barContainer");
 
 function generateArray() {
+  isPaused = false; // Ensure sorting is not paused when generating a new array
+
   const arraySize = +document.getElementById("arraySize").value; // Read arraySize dynamically
   if (arraySize > 30 || arraySize < 5) {
-    alert("Array size should be more than 5 and less than or equal to 30");
-    document.getElementById("arraySize").value = 30; // Reset the value to 10
+    alert("Array size should be between 5 and 30");
+    document.getElementById("arraySize").value = 30; // Reset the value to 30
     return;
   }
+
   values = Array.from(
-    { length: arraySize }, // Use arraySize as a number
+    { length: arraySize }, 
     () => Math.floor(Math.random() * 250) + 10
   );
+
   container.innerHTML = ""; // Clear existing bars
   complexityELM.innerHTML = ""; // Clear complexity details
-  complexityELM.style.display = "none"; // Hide the complexity details div
+  complexityELM.style.display = "none"; // Hide complexity details
   createBars();
   disableButtons(false);
 }
@@ -27,7 +31,6 @@ function createBars() {
     const bar = document.createElement("div");
     bar.style.height = `${value}px`;
     bar.classList.add("bar");
-    bar.innerText = value;
     container.appendChild(bar);
   });
 }
@@ -61,7 +64,7 @@ function showComplexity(algorithm) {
       "<strong>Selection Sort:</strong> Best: O(n²), Average: O(n²), Worst: O(n²), Space: O(1)",
   };
   complexityELM.innerHTML = complexityText[algorithm];
-  complexityELM.style.display = "block"; // Make the div visible
+  complexityELM.style.display = "block"; // Show complexity details
 }
 
 async function bubbleSort() {
@@ -83,9 +86,7 @@ async function bubbleSort() {
         bars[j + 1].style.backgroundColor = "red";
         [values[j], values[j + 1]] = [values[j + 1], values[j]];
         bars[j].style.height = `${values[j]}px`;
-        bars[j].innerText = values[j];
         bars[j + 1].style.height = `${values[j + 1]}px`;
-        bars[j + 1].innerText = values[j + 1];
       }
 
       bars[j].style.backgroundColor = "steelblue";
@@ -99,6 +100,7 @@ async function bubbleSort() {
 async function insertionSort() {
   disableButtons(true);
   showComplexity("insertion");
+
   let bars = document.querySelectorAll(".bar");
   for (let i = 1; i < values.length; i++) {
     let key = values[i];
@@ -111,14 +113,12 @@ async function insertionSort() {
       bars[j].style.backgroundColor = "red";
       values[j + 1] = values[j];
       bars[j + 1].style.height = `${values[j]}px`;
-      bars[j + 1].innerText = values[j];
       await new Promise((resolve) => setTimeout(resolve, 50));
       bars[j].style.backgroundColor = "steelblue";
       j--;
     }
     values[j + 1] = key;
     bars[j + 1].style.height = `${key}px`;
-    bars[j + 1].innerText = key;
 
     for (let k = 0; k <= i; k++) {
       bars[k].style.backgroundColor = "green";
@@ -130,6 +130,7 @@ async function insertionSort() {
 async function selectionSort() {
   disableButtons(true);
   showComplexity("selection");
+
   let bars = document.querySelectorAll(".bar");
   for (let i = 0; i < values.length - 1; i++) {
     let minIndex = i;
@@ -140,7 +141,7 @@ async function selectionSort() {
       await new Promise((resolve) => setTimeout(resolve, 50));
       if (values[j] < values[minIndex]) {
         await waitWhilePaused();
-        if (minIndex !== i) bars[minIndex].style.backgroundColor = "steelblue";
+        if (minIndex !== i) bars[minIndex].style.backgroundColor = "steelblue"; // Reset previous min
         minIndex = j;
         bars[minIndex].style.backgroundColor = "red";
       } else {
@@ -151,9 +152,7 @@ async function selectionSort() {
       bars[minIndex].style.backgroundColor = "steelblue";
       [values[i], values[minIndex]] = [values[minIndex], values[i]];
       bars[i].style.height = `${values[i]}px`;
-      bars[i].innerText = values[i];
       bars[minIndex].style.height = `${values[minIndex]}px`;
-      bars[minIndex].innerText = values[minIndex];
     }
     bars[i].style.backgroundColor = "green";
   }
@@ -161,7 +160,8 @@ async function selectionSort() {
 }
 
 function resetArray() {
-  generateArray(); // Reset the array and complexity details
+  isPaused = false; // Ensure sorting is not paused after reset
+  generateArray(); // Reset array and complexity details
 }
 
 generateArray();
