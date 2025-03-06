@@ -1,11 +1,17 @@
 let values = [];
 let isPaused = false;
-const complexityELM = document.getElementById("complexityInfo"); // Fixed selector
+const complexityELM = document.getElementById("complexityInfo"); // Ensure this matches the HTML ID
 const container = document.getElementById("barContainer");
 
 function generateArray() {
+  const arraySize = +document.getElementById("arraySize").value; // Read arraySize dynamically
+  if (arraySize > 30 || arraySize < 5) {
+    alert("Array size should be more than 5 and less than or equal to 30");
+    document.getElementById("arraySize").value = 30; // Reset the value to 10
+    return;
+  }
   values = Array.from(
-    { length: 30 },
+    { length: arraySize }, // Use arraySize as a number
     () => Math.floor(Math.random() * 250) + 10
   );
   container.innerHTML = ""; // Clear existing bars
@@ -59,7 +65,6 @@ function showComplexity(algorithm) {
 }
 
 async function bubbleSort() {
-  complexityELM.style.display = "block";
   disableButtons(true);
   showComplexity("bubble");
 
@@ -153,6 +158,10 @@ async function selectionSort() {
     bars[i].style.backgroundColor = "green";
   }
   disableButtons(false);
+}
+
+function resetArray() {
+  generateArray(); // Reset the array and complexity details
 }
 
 generateArray();
