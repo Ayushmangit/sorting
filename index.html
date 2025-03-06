@@ -1,0 +1,28 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting Visualizer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="btn-container">
+      <button id="generateArray" onclick="generateArray()">
+        Generate Array
+      </button>
+      <button id="btn-bubble" onclick="bubbleSort()">Bubble</button>
+      <button id="btn-Insertion" onclick="insertionSort()">Insertion</button>
+      <button id="btn-Selection" onclick="selectionSort()">Selection</button>
+      <button id="reset" onclick="generateArray()">Reset</button>
+    </div>
+    <div class="complexity-info" id="complexityInfo">
+      <h3>Algorithm Complexity</h3>
+      <p id="complexityDetails">
+        Click on a sorting algorithm to see its complexity.
+      </p>
+    </div>
+    <div class="container" id="barContainer"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
