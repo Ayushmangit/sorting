@@ -7,6 +7,16 @@
   </head>
   <body>
     <div class="btn-container">
+      <input
+        type="text"
+        value="30"
+        min="5"
+        max="30"
+        id="arraySize"
+        placeholder="5-30"
+        onblur="generateArray()"
+      />
+
       <button id="generateArray" onclick="generateArray()">
         Generate Array
       </button>
