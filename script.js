@@ -32,6 +32,7 @@ function createBars() {
     bar.style.height = `${value}px`;
     bar.classList.add("bar");
     container.appendChild(bar);
+    container.textContent = value;
   });
 }
 
