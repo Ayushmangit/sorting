@@ -1,3 +1,14 @@
+
+
+.bar-number {
+  position: absolute;
+  bottom: 5px;
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+}
+
+
 body {
   display: flex;
   flex-direction: column;
