@@ -108,7 +108,7 @@ async function bubbleSort() {
       bars[j + 1].style.backgroundColor = "steelblue";
     }
     bars[values.length - i - 1].style.backgroundColor = "green";
-bars.style.backgroundColor = "green";
+     bars[0].style.backgroundColor ="orange";
   }
 
   disableButtons(false);
