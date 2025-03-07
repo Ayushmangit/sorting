@@ -109,7 +109,6 @@ async function bubbleSort() {
     }
     bars[values.length - i - 1].style.backgroundColor = "green";
   }
-
   disableButtons(false);
 }
 
