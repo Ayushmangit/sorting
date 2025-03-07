@@ -6,34 +6,49 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="btn-container">
-      <input
-        type="text"
-        value="30"
-        min="5"
-        max="30"
-        id="arraySize"
-        placeholder="5-30"
-        onblur="generateArray()"
-      />
-
-      <button id="generateArray" onclick="generateArray()">
-        Generate Array
-      </button>
-      <button id="btn-bubble" onclick="bubbleSort()">Bubble</button>
-      <button id="btn-Insertion" onclick="insertionSort()">Insertion</button>
-      <button id="btn-Selection" onclick="selectionSort()">Selection</button>
-      <button id="reset" onclick="generateArray()">Reset</button>
+    <div class="header">
+      <div class="input-container">
+        <input
+          type="text"
+          value="30"
+          min="5"
+          max="30"
+          id="arraySize"
+          placeholder="5-30"
+          onblur="generateArray()"
+          class="input"
+        />
+        <div class="slidecontainer">
+          <label for="myRange">Speed</label>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="myRange"
+          />
+          <span id="speedValue"></span>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button id="generateArray" onclick="generateArray()">
+          Generate Array
+        </button>
+        <button id="btn-bubble" onclick="bubbleSort()">Bubble</button>
+        <button id="btn-Insertion" onclick="insertionSort()">Insertion</button>
+        <button id="btn-Selection" onclick="selectionSort()">Selection</button>
+        <button id="reset" onclick="resetArray()">Reset</button>
+      </div>
     </div>
     <div class="complexity-info" id="complexityInfo">
       <h3>Algorithm Complexity</h3>
       <p id="complexityDetails">
         Click on a sorting algorithm to see its complexity.
       </p>
+      <span id="comparisonsAndSwaps"></span>
     </div>
     <div class="container" id="barContainer"></div>
-
-    <h1>hii</h1>
 
     <script src="script.js"></script>
   </body>

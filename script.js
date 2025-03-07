@@ -1,29 +1,46 @@
 let values = [];
-let isPaused = false;
 const complexityELM = document.getElementById("complexityInfo");
 const container = document.getElementById("barContainer");
-
+let isSorting;
 function generateArray() {
-  isPaused = false; 
-
+  stopSorting();
   const arraySize = +document.getElementById("arraySize").value;
   if (arraySize > 30 || arraySize < 5) {
     alert("Array size should be between 5 and 30");
-    document.getElementById("arraySize").value = 30; 
+    document.getElementById("arraySize").value = 30;
     return;
   }
 
   values = Array.from(
-    { length: arraySize }, 
+    { length: arraySize },
     () => Math.floor(Math.random() * 250) + 10
   );
 
-  container.innerHTML = ""; 
-  complexityELM.innerHTML = ""; 
-  complexityELM.style.display = "none"; 
+  container.innerHTML = "";
+  complexityELM.innerHTML = "";
+  complexityELM.style.display = "none";
+
+  // Reset comparisons and swaps
+  comparisons = 0;
+  swaps = 0;
+  compELM.innerHTML = `Comparisons: ${comparisons}, Swaps: ${swaps}`;
+
+  isSorting = false;
+
   createBars();
   disableButtons(false);
 }
+
+let sliderElm = document.getElementById("myRange");
+let outputElm = document.getElementById("speedValue");
+
+let speed = +sliderElm.value;
+outputElm.innerHTML = `${speed}ms`;
+
+sliderElm.addEventListener("input", () => {
+  speed = +sliderElm.value;
+  outputElm.innerHTML = `${speed}ms`;
+});
 
 function createBars() {
   container.innerHTML = "";
@@ -51,55 +68,47 @@ function disableButtons(disable = true) {
   });
 }
 
-function togglePause() {
-  isPaused = !isPaused;
-}
+const compELM = document.getElementById("comparisonsAndSwaps");
 
-async function waitWhilePaused() {
-  while (isPaused) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-  }
-}
+let comparisons = 0;
+let swaps = 0;
 
-function showComplexity(algorithm) {
+function showComplexity(algorithm, comparisons, swaps) {
   const complexityText = {
-    bubble:
-      "<strong>Bubble Sort:</strong> Best: O(n), Average: O(n²), Worst: O(n²), Space: O(1)",
-    insertion:
-      "<strong>Insertion Sort:</strong> Best: O(n), Average: O(n²), Worst: O(n²), Space: O(1)",
-    selection:
-      "<strong>Selection Sort:</strong> Best: O(n²), Average: O(n²), Worst: O(n²), Space: O(1)",
+    bubble: `<strong>Bubble Sort:</strong> Best: O(n), Average: O(n²), Worst: O(n²), Space: O(1) ${comparisons} ${swaps}`,
+    insertion: `<strong>Insertion Sort:</strong> Best: O(n), Average: O(n²), Worst: O(n²), Space: O(1) ${comparisons} ${swaps}`,
+    selection: `<strong>Selection Sort:</strong> Best: O(n²), Average: O(n²), Worst: O(n²), Space: O(1) ${comparisons} ${swaps}`,
   };
   complexityELM.innerHTML = complexityText[algorithm];
   complexityELM.style.display = "block";
 }
 
 async function bubbleSort() {
+  if (isSorting) return; // Prevent multiple sorts
+  isSorting = true;
   disableButtons(true);
-  showComplexity("bubble");
 
   let bars = document.querySelectorAll(".bar");
   for (let i = 0; i < values.length - 1; i++) {
+    if (!isSorting) break; // Stop if sorting is canceled
+
     for (let j = 0; j < values.length - i - 1; j++) {
-      await waitWhilePaused();
+      if (!isSorting) break; // Stop if sorting is canceled
+
       bars[j].style.backgroundColor = "orange";
       bars[j + 1].style.backgroundColor = "orange";
 
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, `${speed}`));
+      comparisons++;
+      compELM.innerHTML = `Comparisons: ${comparisons}, Swaps: ${swaps}`;
 
       if (values[j] > values[j + 1]) {
-        await waitWhilePaused();
-        bars[j].style.backgroundColor = "red";
-        bars[j + 1].style.backgroundColor = "red";
-
-        // Swap values
         [values[j], values[j + 1]] = [values[j + 1], values[j]];
+        swaps++;
 
-        // Update heights
         bars[j].style.height = `${values[j]}px`;
         bars[j + 1].style.height = `${values[j + 1]}px`;
 
-        // Update numbers inside bars
         bars[j].querySelector(".bar-number").textContent = values[j];
         bars[j + 1].querySelector(".bar-number").textContent = values[j + 1];
       }
@@ -107,59 +116,79 @@ async function bubbleSort() {
       bars[j].style.backgroundColor = "steelblue";
       bars[j + 1].style.backgroundColor = "steelblue";
     }
+
     bars[values.length - i - 1].style.backgroundColor = "green";
+    bars[0].style.backgroundColor = "green";
+    showComplexity("bubble", comparisons, swaps);
   }
+  console.log(comparisons);
+  console.log(swaps);
+
+  isSorting = false; // Reset the flag
   disableButtons(false);
 }
 
 async function insertionSort() {
+  if (isSorting) return; // Prevent multiple sorts
+  isSorting = true;
   disableButtons(true);
-  showComplexity("insertion");
 
   let bars = document.querySelectorAll(".bar");
   for (let i = 1; i < values.length; i++) {
+    if (!isSorting) break; // Stop if sorting is canceled
+
     let key = values[i];
     let j = i - 1;
     bars[i].style.backgroundColor = "orange";
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, `${speed}`));
 
     while (j >= 0 && values[j] > key) {
-      await waitWhilePaused();
+      if (!isSorting) break; // Stop if sorting is canceled
+      comparisons++;
       bars[j].style.backgroundColor = "red";
       values[j + 1] = values[j];
-
+      swaps++;
       bars[j + 1].style.height = `${values[j]}px`;
       bars[j + 1].querySelector(".bar-number").textContent = values[j];
 
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      await new Promise((resolve) => setTimeout(resolve, `${speed}`));
       bars[j].style.backgroundColor = "steelblue";
       j--;
     }
+
     values[j + 1] = key;
     bars[j + 1].style.height = `${key}px`;
     bars[j + 1].querySelector(".bar-number").textContent = key;
+    showComplexity("insertion", comparisons, swaps);
 
     for (let k = 0; k <= i; k++) {
       bars[k].style.backgroundColor = "green";
     }
   }
+
+  isSorting = false; // Reset the flag
   disableButtons(false);
 }
 
 async function selectionSort() {
+  if (isSorting) return; // Prevent multiple sorts
+  isSorting = true;
   disableButtons(true);
-  showComplexity("selection");
 
   let bars = document.querySelectorAll(".bar");
   for (let i = 0; i < values.length - 1; i++) {
+    if (!isSorting) break; // Stop if sorting is canceled
+
     let minIndex = i;
     bars[minIndex].style.backgroundColor = "black";
     for (let j = i + 1; j < values.length; j++) {
-      await waitWhilePaused();
+      if (!isSorting) break; // Stop if sorting is canceled
+
       bars[j].style.backgroundColor = "orange";
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      await new Promise((resolve) => setTimeout(resolve, `${speed}`));
+
       if (values[j] < values[minIndex]) {
-        await waitWhilePaused();
+        comparisons++;
         if (minIndex !== i) bars[minIndex].style.backgroundColor = "steelblue";
         minIndex = j;
         bars[minIndex].style.backgroundColor = "red";
@@ -167,24 +196,33 @@ async function selectionSort() {
         bars[j].style.backgroundColor = "steelblue";
       }
     }
+
     if (minIndex !== i) {
+      swaps++;
       bars[minIndex].style.backgroundColor = "steelblue";
       [values[i], values[minIndex]] = [values[minIndex], values[i]];
       bars[i].style.height = `${values[i]}px`;
       bars[minIndex].style.height = `${values[minIndex]}px`;
 
-      // Update numbers inside bars
       bars[i].querySelector(".bar-number").textContent = values[i];
-      bars[minIndex].querySelector(".bar-number").textContent = values[minIndex];
+      bars[minIndex].querySelector(".bar-number").textContent =
+        values[minIndex];
     }
+    showComplexity("selection", comparisons, swaps);
+
     bars[i].style.backgroundColor = "green";
   }
+
+  bars[values.length - 1].style.backgroundColor = "green";
+  isSorting = false; // Reset the flag
   disableButtons(false);
 }
-
 function resetArray() {
-  isPaused = false;
   generateArray();
 }
 
 generateArray();
+
+function stopSorting() {
+  isSorting = false;
+}
