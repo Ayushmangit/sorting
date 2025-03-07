@@ -1,7 +1,7 @@
 
 
 .bar-number {
-  position: relative;
+  position: absolute;
   bottom: 5px;
   font-size: 12px;
   color: white;
@@ -38,6 +38,7 @@ button:disabled {
 }
 
 .bar {
+position:absolute;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
