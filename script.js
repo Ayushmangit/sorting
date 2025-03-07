@@ -1,15 +1,15 @@
 let values = [];
 let isPaused = false;
-const complexityELM = document.getElementById("complexityInfo"); // Ensure this matches the HTML ID
+const complexityELM = document.getElementById("complexityInfo");
 const container = document.getElementById("barContainer");
 
 function generateArray() {
-  isPaused = false; // Ensure sorting is not paused when generating a new array
+  isPaused = false; 
 
-  const arraySize = +document.getElementById("arraySize").value; // Read arraySize dynamically
+  const arraySize = +document.getElementById("arraySize").value;
   if (arraySize > 30 || arraySize < 5) {
     alert("Array size should be between 5 and 30");
-    document.getElementById("arraySize").value = 30; // Reset the value to 30
+    document.getElementById("arraySize").value = 30; 
     return;
   }
 
@@ -18,9 +18,9 @@ function generateArray() {
     () => Math.floor(Math.random() * 250) + 10
   );
 
-  container.innerHTML = ""; // Clear existing bars
-  complexityELM.innerHTML = ""; // Clear complexity details
-  complexityELM.style.display = "none"; // Hide complexity details
+  container.innerHTML = ""; 
+  complexityELM.innerHTML = ""; 
+  complexityELM.style.display = "none"; 
   createBars();
   disableButtons(false);
 }
@@ -31,8 +31,14 @@ function createBars() {
     const bar = document.createElement("div");
     bar.style.height = `${value}px`;
     bar.classList.add("bar");
+
+    // Create a span element for the number
+    const number = document.createElement("span");
+    number.textContent = value;
+    number.classList.add("bar-number");
+
+    bar.appendChild(number);
     container.appendChild(bar);
-    bar.innerHTML = `${value}`;
   });
 }
 
@@ -65,7 +71,7 @@ function showComplexity(algorithm) {
       "<strong>Selection Sort:</strong> Best: O(n²), Average: O(n²), Worst: O(n²), Space: O(1)",
   };
   complexityELM.innerHTML = complexityText[algorithm];
-  complexityELM.style.display = "block"; // Show complexity details
+  complexityELM.style.display = "block";
 }
 
 async function bubbleSort() {
@@ -85,9 +91,17 @@ async function bubbleSort() {
         await waitWhilePaused();
         bars[j].style.backgroundColor = "red";
         bars[j + 1].style.backgroundColor = "red";
+
+        // Swap values
         [values[j], values[j + 1]] = [values[j + 1], values[j]];
+
+        // Update heights
         bars[j].style.height = `${values[j]}px`;
         bars[j + 1].style.height = `${values[j + 1]}px`;
+
+        // Update numbers inside bars
+        bars[j].querySelector(".bar-number").textContent = values[j];
+        bars[j + 1].querySelector(".bar-number").textContent = values[j + 1];
       }
 
       bars[j].style.backgroundColor = "steelblue";
@@ -113,13 +127,17 @@ async function insertionSort() {
       await waitWhilePaused();
       bars[j].style.backgroundColor = "red";
       values[j + 1] = values[j];
+
       bars[j + 1].style.height = `${values[j]}px`;
+      bars[j + 1].querySelector(".bar-number").textContent = values[j];
+
       await new Promise((resolve) => setTimeout(resolve, 50));
       bars[j].style.backgroundColor = "steelblue";
       j--;
     }
     values[j + 1] = key;
     bars[j + 1].style.height = `${key}px`;
+    bars[j + 1].querySelector(".bar-number").textContent = key;
 
     for (let k = 0; k <= i; k++) {
       bars[k].style.backgroundColor = "green";
@@ -142,7 +160,7 @@ async function selectionSort() {
       await new Promise((resolve) => setTimeout(resolve, 50));
       if (values[j] < values[minIndex]) {
         await waitWhilePaused();
-        if (minIndex !== i) bars[minIndex].style.backgroundColor = "steelblue"; // Reset previous min
+        if (minIndex !== i) bars[minIndex].style.backgroundColor = "steelblue";
         minIndex = j;
         bars[minIndex].style.backgroundColor = "red";
       } else {
@@ -154,6 +172,10 @@ async function selectionSort() {
       [values[i], values[minIndex]] = [values[minIndex], values[i]];
       bars[i].style.height = `${values[i]}px`;
       bars[minIndex].style.height = `${values[minIndex]}px`;
+
+      // Update numbers inside bars
+      bars[i].querySelector(".bar-number").textContent = values[i];
+      bars[minIndex].querySelector(".bar-number").textContent = values[minIndex];
     }
     bars[i].style.backgroundColor = "green";
   }
@@ -161,8 +183,8 @@ async function selectionSort() {
 }
 
 function resetArray() {
-  isPaused = false; // Ensure sorting is not paused after reset
-  generateArray(); // Reset array and complexity details
+  isPaused = false;
+  generateArray();
 }
 
 generateArray();
