@@ -38,7 +38,7 @@ button:disabled {
 }
 
 .bar {
-position:absolute;
+position:relative;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
