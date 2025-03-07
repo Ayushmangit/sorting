@@ -70,8 +70,11 @@ function disableButtons(disable = true) {
 
 const compELM = document.getElementById("comparisonsAndSwaps");
 
-let comparisons = 0;
-let swaps = 0;
+function resetComparisonsAndSwaps() {
+  comparisons = 0;
+  swaps = 0;
+  compELM.innerHTML = `Comparisons: ${comparisons}, Swaps: ${swaps}`;
+}
 
 function showComplexity(algorithm, comparisons, swaps) {
   const complexityText = {
@@ -84,6 +87,8 @@ function showComplexity(algorithm, comparisons, swaps) {
 }
 
 async function bubbleSort() {
+  compELM.innerHTML = `Comparisons: ${comparisons}, Swaps: ${swaps}`;
+  resetComparisonsAndSwaps();
   if (isSorting) return; // Prevent multiple sorts
   isSorting = true;
   disableButtons(true);
@@ -100,7 +105,6 @@ async function bubbleSort() {
 
       await new Promise((resolve) => setTimeout(resolve, `${speed}`));
       comparisons++;
-      compELM.innerHTML = `Comparisons: ${comparisons}, Swaps: ${swaps}`;
 
       if (values[j] > values[j + 1]) {
         [values[j], values[j + 1]] = [values[j + 1], values[j]];
@@ -121,14 +125,14 @@ async function bubbleSort() {
     bars[0].style.backgroundColor = "green";
     showComplexity("bubble", comparisons, swaps);
   }
-  console.log(comparisons);
-  console.log(swaps);
 
   isSorting = false; // Reset the flag
   disableButtons(false);
 }
 
 async function insertionSort() {
+  resetComparisonsAndSwaps();
+  showComplexity("insertion", comparisons, swaps);
   if (isSorting) return; // Prevent multiple sorts
   isSorting = true;
   disableButtons(true);
@@ -159,7 +163,6 @@ async function insertionSort() {
     values[j + 1] = key;
     bars[j + 1].style.height = `${key}px`;
     bars[j + 1].querySelector(".bar-number").textContent = key;
-    showComplexity("insertion", comparisons, swaps);
 
     for (let k = 0; k <= i; k++) {
       bars[k].style.backgroundColor = "green";
@@ -171,6 +174,8 @@ async function insertionSort() {
 }
 
 async function selectionSort() {
+  showComplexity("selection", comparisons, swaps);
+  resetComparisonsAndSwaps();
   if (isSorting) return; // Prevent multiple sorts
   isSorting = true;
   disableButtons(true);
@@ -208,7 +213,6 @@ async function selectionSort() {
       bars[minIndex].querySelector(".bar-number").textContent =
         values[minIndex];
     }
-    showComplexity("selection", comparisons, swaps);
 
     bars[i].style.backgroundColor = "green";
   }
