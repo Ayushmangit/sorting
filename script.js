@@ -85,7 +85,7 @@ async function bubbleSort() {
       bars[j].style.backgroundColor = "orange";
       bars[j + 1].style.backgroundColor = "orange";
 
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       if (values[j] > values[j + 1]) {
         await waitWhilePaused();
