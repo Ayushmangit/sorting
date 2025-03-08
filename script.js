@@ -88,11 +88,11 @@ function showComplexity(algorithm, comparisons, swaps) {
 }
 
 async function bubbleSort() {
-  compELM.innerHTML = `Comparisons: ${comparisons}, Swaps: ${swaps}`;
   resetComparisonsAndSwaps();
   if (isSorting) return; // Prevent multiple sorts
   isSorting = true;
   disableButtons(true);
+  compELM.innerHTML = `Comparisons: ${comparisons}, Swaps: ${swaps}`;
 
   let bars = document.querySelectorAll(".bar");
   for (let i = 0; i < values.length - 1; i++) {
