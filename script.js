@@ -13,7 +13,7 @@ function generateArray() {
 
   values = Array.from(
     { length: arraySize },
-    () => Math.floor(Math.random() * 250) + 10
+    () => Math.floor(Math.random() * 250) + 1
   );
 
   container.innerHTML = "";
@@ -145,9 +145,9 @@ async function insertionSort() {
     bars[i].style.backgroundColor = "orange";
     await new Promise((resolve) => setTimeout(resolve, `${speed}`));
 
-    while (j >= 0 && values[j] > key) {
-      if (!isSorting) break; // Stop if sorting is canceled
       comparisons++;
+      while (j >= 0 && values[j] > key) {
+      if (!isSorting) break; // Stop if sorting is canceled
       bars[j].style.backgroundColor = "red";
       values[j + 1] = values[j];
       swaps++;
