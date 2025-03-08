@@ -224,6 +224,7 @@ async function selectionSort() {
 }
 function resetArray() {
   generateArray();
+   complexityELM.style.display = "none";
 }
 
 generateArray();
