@@ -4,6 +4,7 @@ const container = document.getElementById("barContainer");
 let isSorting;
 function generateArray() {
   stopSorting();
+  resetComparisonsAndSwaps();
   const arraySize = +document.getElementById("arraySize").value;
   if (arraySize > 30 || arraySize < 5) {
     alert("Array size should be between 5 and 30");
