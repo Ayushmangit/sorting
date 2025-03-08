@@ -3,6 +3,7 @@ const complexityELM = document.getElementById("complexityInfo");
 const container = document.getElementById("barContainer");
 let isSorting;
 function generateArray() {
+  complexityELM.style.display = "none";
   stopSorting();
   resetComparisonsAndSwaps();
   const arraySize = +document.getElementById("arraySize").value;
@@ -19,7 +20,6 @@ function generateArray() {
 
   container.innerHTML = "";
   complexityELM.innerHTML = "";
-  complexityELM.style.display = "none";
 
   // Reset comparisons and swaps
   comparisons = 0;
