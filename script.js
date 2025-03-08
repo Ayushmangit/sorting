@@ -132,7 +132,6 @@ async function bubbleSort() {
 
 async function insertionSort() {
   resetComparisonsAndSwaps();
-  showComplexity("insertion", comparisons, swaps);
   if (isSorting) return; // Prevent multiple sorts
   isSorting = true;
   disableButtons(true);
@@ -155,6 +154,7 @@ async function insertionSort() {
       bars[j + 1].style.height = `${values[j]}px`;
       bars[j + 1].querySelector(".bar-number").textContent = values[j];
 
+  showComplexity("insertion", comparisons, swaps);
       await new Promise((resolve) => setTimeout(resolve, `${speed}`));
       bars[j].style.backgroundColor = "steelblue";
       j--;
@@ -174,7 +174,6 @@ async function insertionSort() {
 }
 
 async function selectionSort() {
-  showComplexity("selection", comparisons, swaps);
   resetComparisonsAndSwaps();
   if (isSorting) return; // Prevent multiple sorts
   isSorting = true;
@@ -188,6 +187,7 @@ async function selectionSort() {
     bars[minIndex].style.backgroundColor = "black";
     for (let j = i + 1; j < values.length; j++) {
       if (!isSorting) break; // Stop if sorting is canceled
+  showComplexity("selection", comparisons, swaps);
 
       bars[j].style.backgroundColor = "orange";
       await new Promise((resolve) => setTimeout(resolve, `${speed}`));
