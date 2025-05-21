@@ -9,11 +9,11 @@ const info = document.querySelector(".info");
 const sliderElm = document.getElementById("myRange");
 const speedValue = document.getElementById("speedValue");
 let speed = +sliderElm.value;
-speedValue.innerHTML = `${speed}ms`;
+speedValue.innerHTML = `${speed / 1000}sec`;
 
 sliderElm.addEventListener("input", () => {
   speed = +sliderElm.value;
-  speedValue.innerHTML = `${speed}ms`;
+  speedValue.innerHTML = `${(speed / 1000).toFixed(1)}sec`;
 });
 
 //todo Array Creation
