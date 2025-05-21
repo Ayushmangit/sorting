@@ -28,6 +28,7 @@ body {
   padding: 8px 50px;
   color: #999;
 }
+
 .container {
   position: absolute;
   display: flex;
@@ -68,6 +69,7 @@ body {
   margin: 2px;
   background-color: steelblue;
 }
+
 button {
   background: none;
   border: none;
@@ -78,6 +80,7 @@ button {
 button:live {
   color: #999;
 }
+
 button:active {
   color: #999;
 }
@@ -117,4 +120,16 @@ button:hover {
   text-decoration: none;
   list-style: none;
   font-weight: bold;
+}
+
+.members {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 14px;
+  gap: 8px;
+  font-size: 8px;
 }

@@ -1,53 +1,46 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sorting Visualizer</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="header">
-      <div class="input-container">
-        <input
-          id="arraySize"
-          type="number"
-          value="30"
-          min="5"
-          max="30"
-          placeholder="5-30"
-          onchange="generateArray()"
-          class="input"
-        />
-        <div class="slidecontainer">
-          <label for="myRange">Speed</label>
-          <input
-            type="range"
-            min="1"
-            max="10000"
-            value="50"
-            class="slider"
-            id="myRange"
-          />
-          <span id="speedValue"></span>
-        </div>
-      </div>
-      <div class="btn-group">
-        <button id="generateArray" onclick="generateArray()">
-          Generate Array
-        </button>
-        <button id="btn-bubble" onclick="bubbleSort()">Bubble</button>
-        <button id="btn-Insertion" onclick="insertionSort()">Insertion</button>
-        <button id="btn-Selection" onclick="selectionSort()">Selection</button>
-        <button id="quickSort">Quick Sort</button>
-        <button id="heapSort">Heap Sort</button>
 
-        <button id="reset" onclick="resetArray()">Reset</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorting Visualizer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="header">
+    <div class="input-container">
+      <input id="arraySize" type="number" value="30" min="5" max="30" placeholder="5-30" onchange="generateArray()"
+        class="input" />
+      <div class="slidecontainer">
+        <label for="myRange">Speed</label>
+        <input type="range" min="1" max="10000" value="50" class="slider" id="myRange" />
+        <span id="speedValue"></span>
       </div>
     </div>
+    <div class="btn-group">
+      <button id="generateArray" onclick="generateArray()">
+        Generate Array
+      </button>
+      <button id="btn-bubble" onclick="bubbleSort()">Bubble</button>
+      <button id="btn-Insertion" onclick="insertionSort()">Insertion</button>
+      <button id="btn-Selection" onclick="selectionSort()">Selection</button>
+      <button id="quickSort">Quick Sort</button>
+      <button id="heapSort">Heap Sort</button>
 
-    <div class="container" id="barContainer"></div>
-    <div class="info"></div>
+      <button id="reset" onclick="resetArray()">Reset</button>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
-  </body>
+  <div class="container" id="barContainer"></div>
+  <div class="info"></div>
+  <ul class="members">
+    <l>Ayushman</l>
+    <l>Siddharth</l>
+    <l>Deepanshu</l>
+    <l>Naba</l>
+  </ul>
+  <script src="script.js"></script>
+</body>
+
 </html>
